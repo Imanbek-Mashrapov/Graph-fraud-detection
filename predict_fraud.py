@@ -20,10 +20,15 @@ def predict(transaction_dict):
 
     df = add_transaction_features(df)
 
-    features = [
-        col for col in df.columns
-        if df[col].dtype != "object" and col not in ["isFraud"]
-    ]
+    df["sender_tx_count"] = 0
+    df["sender_avg_amount"] = 0
+    df["sender_max_amount"] = 0
+    df["sender_unique_dest"] = 0
+
+    if "step" in df.columns:
+        df = df.drop(columns=["step"])
+
+    features = model.get_booster().feature_names
 
     proba = model.predict_proba(df[features])[:,1][0]
 
@@ -32,18 +37,22 @@ def predict(transaction_dict):
 
 if __name__ == "__main__":
 
+    
     example_tx = {
 
-        "step": 10,
+        "step": 200,
         "type": "TRANSFER",
-        "amount": 5000,
-        "nameOrig": "C123",
-        "oldbalanceOrg": 6000,
-        "newbalanceOrig": 1000,
-        "nameDest": "C456",
-        "oldbalanceDest": 2000,
-        "newbalanceDest": 7000
+        "amount": 7500,
+
+        "nameOrig": "C999999",
+        "oldbalanceOrg": 7500,
+        "newbalanceOrig": 0,
+
+        "nameDest": "C888888",
+        "oldbalanceDest": 12000,
+        "newbalanceDest": 12000
     }
+
 
     p = predict(example_tx)
 
