@@ -23,30 +23,20 @@ def get_models(scale_pos_weight):
     return {
 
         "random_forest": RandomForestClassifier(
-            n_estimators=200,
-            max_depth=15,
+            n_estimators=20,
+            max_depth=5,
             class_weight="balanced",
-            n_jobs=-1,
             random_state=42
         ),
 
         "xgboost": XGBClassifier(
-            n_estimators=300,
-            max_depth=6,
+            n_estimators=200,
+            max_depth=5,
             learning_rate=0.05,
             scale_pos_weight=scale_pos_weight,
             eval_metric="aucpr",
-            random_state=42,
-            verbosity=0
-        ),
-
-        "lightgbm": LGBMClassifier(
-            n_estimators=300,
-            max_depth=6,
-            learning_rate=0.05,
-            scale_pos_weight=scale_pos_weight,
             random_state=42
-        ),
+        )
     }
 
 
@@ -75,7 +65,7 @@ def save_model(model, name):
 
 def main():
 
-    df = load_data("data/raw/paysim.csv")
+    df = load_data("paysim.csv")
     train_df, test_df = temporal_split(df)
     train_feat, test_feat = build_features(train_df, test_df)
     feature_cols = get_feature_columns(train_feat)

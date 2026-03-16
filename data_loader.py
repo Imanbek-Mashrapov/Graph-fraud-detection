@@ -73,9 +73,9 @@ def load_parquet(path: str) -> pd.DataFrame:
 
 if __name__ == "__main__":
 
-    df = load_data("data/raw/paysim.csv")
+    df = load_data("paysim.csv")
 
-    save_parquet(df, "data/processed/transactions_clean.parquet")
+    save_parquet(df, "transactions_clean.parquet")
 
     train_df, test_df = temporal_split(df)
 

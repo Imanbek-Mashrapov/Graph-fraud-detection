@@ -24,7 +24,7 @@ def load_model(name):
 
 
 def main():
-    df = load_data("data/raw/paysim.csv")
+    df = load_data("paysim.csv")
     train_df, test_df = temporal_split(df)
     train_feat, test_feat = build_features(train_df, test_df)
     feature_cols = get_feature_columns(train_feat)
@@ -84,6 +84,20 @@ def main():
 
     print("\nModel Comparison")
     print(results_df)
+
+
+def plot_feature_importance(model, feature_cols):
+    importances = model.feature_importances_
+
+    imp_df = pd.Series(importances, index=feature_cols)
+
+    imp_df = imp_df.sort_values(ascending=False).head(15)
+
+    plt.figure(figsize=(8,5))
+    imp_df.plot(kind="barh")
+    plt.title("Top Features")
+    plt.gca().invert_yaxis()
+    plt.show()
 
 
 if __name__ == "__main__":

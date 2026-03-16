@@ -105,8 +105,7 @@ def evaluate(model, data):
 
 
 def main():
-
-    df = load_data("data/raw/paysim.csv")
+    df = load_data("paysim.csv")
     train_df, test_df = temporal_split(df)
     train_feat, test_feat = build_features(train_df, test_df)
     # Build graph

@@ -61,7 +61,7 @@ def print_graph_stats(G):
 
 
 if __name__ == "__main__":
-    df = load_data("data/raw/paysim.csv")
+    df = load_data("paysim.csv")
     train_df, _ = temporal_split(df)
     train_df = train_df[train_df["type"].isin(["TRANSFER", "CASH_OUT"])]
 
@@ -70,5 +70,5 @@ if __name__ == "__main__":
     edge_df = attach_node_features(train_df, node_df)
 
     print_graph_stats(G)
-    node_df.to_parquet("data/processed/node_features.parquet", index=False)
-    edge_df.to_parquet("data/processed/graph_edges.parquet", index=False)
+    node_df.to_parquet("node_features.parquet", index=False)
+    edge_df.to_parquet("graph_edges.parquet", index=False)

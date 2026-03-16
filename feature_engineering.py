@@ -80,7 +80,7 @@ def get_feature_columns(df):
 
 
 if __name__ == "__main__":
-    df = load_data("data/raw/paysim.csv")
+    df = load_data("paysim.csv")
     train_df, test_df = temporal_split(df)
     train_feat, test_feat = build_features(train_df, test_df)
     feature_cols = get_feature_columns(train_feat)
